@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { add } from "../add/index.ts";
 import { format, type FormatOptions } from "../format/index.ts";
+import { enUS } from "../locale/en-US/index.ts";
 import { set } from "../set/index.ts";
 import { startOfWeek } from "../startOfWeek/index.ts";
 import type {
@@ -83,5 +84,14 @@ describe("options types with exactOptionalPropertyTypes", () => {
       useAdditionalDayOfYearTokens: undefined,
     };
     expect(additionalTokensOpts.useAdditionalWeekYearTokens).toBeUndefined();
+  });
+
+  it("allows explicit undefined for match options (width and valueCallback)", () => {
+    const result = enUS.match.ordinalNumber("1st", {
+      unit: "date",
+      width: undefined,
+      valueCallback: undefined,
+    });
+    expect(result?.value).toBe(1);
   });
 });
